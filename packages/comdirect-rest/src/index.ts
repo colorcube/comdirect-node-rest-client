@@ -1,1 +1,1 @@
-export * from './lib/comdirect-rest';
+export * from './lib';

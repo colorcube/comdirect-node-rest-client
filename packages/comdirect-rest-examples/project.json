@@ -1,0 +1,57 @@
+{
+  "name": "comdirect-rest-examples",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/comdirect-rest-examples/src",
+  "projectType": "application",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/esbuild:esbuild",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "platform": "node",
+        "outputPath": "dist/packages/comdirect-rest-examples",
+        "format": ["cjs"],
+        "bundle": false,
+        "main": "packages/comdirect-rest-examples/src/main.ts",
+        "tsConfig": "packages/comdirect-rest-examples/tsconfig.app.json",
+        "assets": ["packages/comdirect-rest-examples/src/assets"],
+        "generatePackageJson": true,
+        "esbuildOptions": {
+          "sourcemap": true,
+          "outExtension": {
+            ".js": ".js"
+          }
+        }
+      },
+      "configurations": {
+        "development": {},
+        "production": {
+          "esbuildOptions": {
+            "sourcemap": false,
+            "outExtension": {
+              ".js": ".js"
+            }
+          }
+        }
+      }
+    },
+    "start": {
+      "executor": "@nx/js:node",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "comdirect-rest-examples:build",
+        "watch": false
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "comdirect-rest-examples:build:development"
+        },
+        "production": {
+          "buildTarget": "comdirect-rest-examples:build:production"
+        }
+      }
+    }
+  }
+}

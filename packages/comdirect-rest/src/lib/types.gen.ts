@@ -1985,6 +1985,8 @@ export type SessionV1PatchSessionData = {
      * The literal "user" or the UUID of the client.
      */
     user: string;
+
+    id: string;
 };
 
 export type SessionV1PatchSessionResponse = Session;
@@ -2001,7 +2003,48 @@ export type SessionV1PostSessionValidationData = {
     user: string;
 };
 
-export type SessionV1PostSessionValidationResponse = Session;
+export type SessionValidationResponseLink = {
+  href: string;
+  rel: string;
+  method: string;
+  type: string;
+};
+
+export type SessionValidationResponse = {
+  id: string;
+  typ: string;
+  availableTypes: string[];
+  link: SessionValidationResponseLink;
+};
+
+export type SessionV1PostSessionValidationResponse = SessionValidationResponse;
+
+
+export type AuthCredentials = {
+  client_id: string;
+  client_secret: string;
+  grant_type: 'password' | 'cd_secondary';
+  username?: string;
+  password?: string;
+  token?: string;
+};
+
+export type OAuthData = {
+  formData?: AuthCredentials;
+};
+
+export type AuthenticationData = {
+  access_token: string;
+  token_type: string;
+  refresh_token: string;
+  expires_in: number;
+  scope: string;
+  kdnr: string;
+  bpid: string;
+  kontaktId: string;
+}
+
+export type OAuthResponse = AuthenticationData;
 
 export type $OpenApiTs = {
     '/banking/clients/{user}/v2/accounts/balances': {

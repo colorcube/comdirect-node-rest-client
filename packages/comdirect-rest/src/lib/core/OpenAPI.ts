@@ -1,6 +1,6 @@
 import type { ApiRequestOptions } from './ApiRequestOptions';
 
-type Headers = Record<string, string>;
+export type Headers = Record<string, string>;
 type Middleware<T> = (value: T) => T | Promise<T>;
 type Resolver<T> = (options: ApiRequestOptions) => Promise<T>;
 
@@ -28,10 +28,12 @@ export type OpenAPIConfig = {
 	CREDENTIALS: 'include' | 'omit' | 'same-origin';
 	ENCODE_PATH?: ((path: string) => string) | undefined;
 	HEADERS?: Headers | Resolver<Headers> | undefined;
-	PASSWORD?: string | Resolver<string> | undefined;
-	TOKEN?: string | Resolver<string> | undefined;
-	USERNAME?: string | Resolver<string> | undefined;
-	VERSION: string;
+  CLIENT_ID?: string | Resolver<string> | undefined;
+  CLIENT_SECRET?: string | Resolver<string> | undefined;
+  USERNAME?: string | Resolver<string> | undefined;
+  PASSWORD?: string | Resolver<string> | undefined;
+  TOKEN?: string | Resolver<string> | undefined;
+  VERSION: string;
 	WITH_CREDENTIALS: boolean;
 	interceptors: {
 		request: Interceptors<RequestInit>;
@@ -40,13 +42,15 @@ export type OpenAPIConfig = {
 };
 
 export const OpenAPI: OpenAPIConfig = {
-	BASE: 'https://api.comdirect.de/api',
+	BASE: 'https://api.comdirect.de',
 	CREDENTIALS: 'include',
 	ENCODE_PATH: undefined,
 	HEADERS: undefined,
-	PASSWORD: undefined,
-	TOKEN: undefined,
-	USERNAME: undefined,
+  CLIENT_ID: process.env.COMDIRECT_CLIENT_ID,
+  CLIENT_SECRET: process.env.COMDIRECT_CLIENT_SECRET,
+  USERNAME: process.env.COMDIRECT_USERNAME,
+  PASSWORD: process.env.COMDIRECT_PASSWORD,
+  TOKEN: undefined,
 	VERSION: '20.04',
 	WITH_CREDENTIALS: false,
 	interceptors: {

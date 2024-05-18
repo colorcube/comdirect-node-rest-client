@@ -5,3 +5,4 @@ export { OpenAPI, type OpenAPIConfig } from './core/OpenAPI';
 export * from './schemas.gen';
 export * from './services.gen';
 export * from './types.gen';
+export * from './oauth';

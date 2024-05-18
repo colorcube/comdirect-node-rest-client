@@ -8,6 +8,7 @@ export type ApiRequestOptions = {
 	readonly formData?: Record<string, unknown>;
 	readonly body?: any;
 	readonly mediaType?: string;
+	readonly withoutAuthorization?: boolean;
 	readonly responseHeader?: string;
 	readonly errors?: Record<number, string>;
 };

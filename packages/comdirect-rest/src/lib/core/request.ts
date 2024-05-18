@@ -129,15 +129,20 @@ export const getHeaders = async (config: OpenAPIConfig, options: ApiRequestOptio
 			[key]: String(value),
 		}), {} as Record<string, string>);
 
-	if (isStringWithValue(token)) {
-		headers['Authorization'] = `Bearer ${token}`;
-	}
+  if (options.withoutAuthorization) {
+    delete headers['x-http-request-info'];
+  } else {
+    if (isStringWithValue(token)) {
+      headers['Authorization'] = `Bearer ${token}`;
+    } else if (isStringWithValue(username) && isStringWithValue(password)) {
+      const credentials = base64(`${username}:${password}`);
+      headers['Authorization'] = `Basic ${credentials}`;
+    }
+  }
 
-	if (isStringWithValue(username) && isStringWithValue(password)) {
-		const credentials = base64(`${username}:${password}`);
-		headers['Authorization'] = `Basic ${credentials}`;
-	}
-
+  if (options.formData !== undefined) {
+    headers['Content-Type'] = 'application/x-www-form-urlencoded';
+  }
 	if (options.body !== undefined) {
 		if (options.mediaType) {
 			headers['Content-Type'] = options.mediaType;
@@ -312,12 +317,18 @@ export const request = <T>(config: OpenAPIConfig, options: ApiRequestOptions): C
 			const body = getRequestBody(options);
 			const headers = await getHeaders(config, options);
 
+      // console.log(url);
+      // console.log(headers);
+      // console.log(formData);
+
 			if (!onCancel.isCancelled) {
 				let response = await sendRequest(config, options, url, body, formData, headers, onCancel);
 
 				for (const fn of config.interceptors.response._fns) {
 					response = await fn(response);
 				}
+
+        // console.log(response);
 
 				const responseBody = await getResponseBody(response);
 				const responseHeader = getResponseHeader(response, options.responseHeader);

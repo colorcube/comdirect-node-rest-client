@@ -1,9 +1,14 @@
 import * as readline from 'readline/promises';
 import { OpenAPI } from './core/OpenAPI';
-import { ComdirectAuthService, ComdirectSessionService } from './services.gen';
 import { AuthenticationData, Session, SessionV1PatchSessionData, SessionV1PostSessionValidationData, SessionValidationResponse } from './types.gen';
+import { ComdirectSessionService } from './comdirect-session-service';
+import { ComdirectAuthService } from './comdirect-auth-service';
 
 
+/**
+ * You might want to do this in your own application.
+ * It shows how the authentication works.
+ */
 export class ComdirectOauth {
 
   public accessToken = null;
@@ -88,7 +93,6 @@ export class ComdirectOauth {
   }
 
   public async doTanChallenge(session: Session): Promise<SessionValidationResponse> {
-
     const data = <SessionV1PostSessionValidationData>this.sessionData();
     data.body = session;
 
@@ -96,7 +100,6 @@ export class ComdirectOauth {
   }
 
   public async activateSessionTan(session: Session, authInfo: SessionValidationResponse) {
-
     const data = <SessionV1PatchSessionData>this.sessionData();
     data.body = session;
     data.id = authInfo.id;

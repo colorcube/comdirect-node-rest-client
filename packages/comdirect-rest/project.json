@@ -1,0 +1,33 @@
+{
+  "name": "comdirect-rest",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/comdirect-rest/src",
+  "projectType": "library",
+  "release": {
+    "version": {
+      "generatorOptions": {
+        "packageRoot": "dist/{projectRoot}",
+        "currentVersionResolver": "git-tag"
+      }
+    }
+  },
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/comdirect-rest",
+        "tsConfig": "packages/comdirect-rest/tsconfig.lib.json",
+        "packageJson": "packages/comdirect-rest/package.json",
+        "main": "packages/comdirect-rest/src/index.ts",
+        "assets": ["packages/comdirect-rest/*.md"]
+      }
+    },
+    "nx-release-publish": {
+      "options": {
+        "packageRoot": "dist/{projectRoot}"
+      }
+    }
+  }
+}

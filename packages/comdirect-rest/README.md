@@ -1,11 +1,7 @@
-# comdirect-rest
+# Comdirect REST API Client Lib for Node/Typescript
 
-This library was generated with [Nx](https://nx.dev).
+This is an unofficial node.js module for the [comdirect REST API](https://www.comdirect.de/cms/kontakt-zugaenge-api.html)
 
-## Building
+**Important: This is not very much tested**
 
-Run `nx build comdirect-rest` to build the library.
-
-## Running unit tests
-
-Run `nx test comdirect-rest` to execute the unit tests via [Jest](https://jestjs.io).
+Feel free to clone this and make it a real library, as this is a quick and dirty solution. I won't work on this very much.
